@@ -1,16 +1,16 @@
 package id.herdroid.moviecatalog.api.source
 
 import androidx.lifecycle.LiveData
-import id.herdroid.moviecatalog.data.response.MovieItem
-import id.herdroid.moviecatalog.data.response.TvShowItem
+import id.herdroid.moviecatalog.data.entity.MovieEntity
+import id.herdroid.moviecatalog.data.entity.TvShowEntity
 
 interface DataSource {
 
-    fun getListMovie(page: Int): LiveData<List<MovieItem>>
+    fun getListMovie(): LiveData<List<MovieEntity>>
 
-    fun getMovieById(movieId: Int): LiveData<MovieItem>
+    fun getMovieById(movieId: Int): LiveData<MovieEntity>
 
-    fun getListTvShow(page: Int): LiveData<List<TvShowItem>>
+    fun getListTvShow(): LiveData<List<TvShowEntity>>
 
-    fun getTvShowById(tvShowId: Int): LiveData<TvShowItem>
+    fun getTvShowById(tvShowId: Int): LiveData<TvShowEntity>
 }

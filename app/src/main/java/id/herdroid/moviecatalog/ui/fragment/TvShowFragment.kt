@@ -1,6 +1,5 @@
 package id.herdroid.moviecatalog.ui.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,18 +10,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.herdroid.moviecatalog.R
 import id.herdroid.moviecatalog.adapter.TvShowAdapter
-import id.herdroid.moviecatalog.data.response.TvShowItem
 import id.herdroid.moviecatalog.enum.TypeData
-import id.herdroid.moviecatalog.ui.detail.DetailActivity
 import id.herdroid.moviecatalog.viewmodel.TvShowViewModel
 import id.herdroid.moviecatalog.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_tvshow.*
 
 class TvShowFragment :Fragment(){
-    private var type: TypeData = TypeData.TV_SHOWS
 
     companion object {
-        const val TVSHOW_TYPE = "type"
+        private const val TVSHOW_TYPE = "type"
 
         @JvmStatic
         fun newInstance(type: TypeData) =
@@ -51,7 +47,7 @@ class TvShowFragment :Fragment(){
 
             val academyAdapter = TvShowAdapter()
             pb_tv.visibility = View.VISIBLE
-            viewModel.getTvShow().observe(viewLifecycleOwner, Observer{ tvShow ->
+            viewModel.loadTvShow().observe(viewLifecycleOwner, Observer{ tvShow ->
                 pb_tv.visibility = View.GONE
                 academyAdapter.setTvShow(tvShow)
                 academyAdapter.notifyDataSetChanged()

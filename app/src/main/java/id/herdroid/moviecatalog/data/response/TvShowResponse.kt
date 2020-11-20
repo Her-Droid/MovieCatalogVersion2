@@ -1,25 +1,11 @@
 package id.herdroid.moviecatalog.data.response
 
 import com.google.gson.annotations.SerializedName
+import id.herdroid.moviecatalog.data.entity.TvShowEntity
 
 data class TvShowResponse(
-        @SerializedName("result")
-        val results: List<TvShowItem>
+        @SerializedName("results")
+        val results: List<TvShowEntity>
 )
 
-data class TvShowItem(
-        @SerializedName("id")
-        val id: Int,
 
-        @SerializedName("title")
-        val title: String? = null,
-
-        @SerializedName("overview")
-        val description: String? = null,
-
-        @SerializedName("poster_path")
-        val imagePath: String? = null,
-
-        @SerializedName("release_date")
-        val releaseDate: String? = null,
-)

@@ -8,13 +8,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import id.herdroid.moviecatalog.R
-import id.herdroid.moviecatalog.data.response.MovieItem
-import id.herdroid.moviecatalog.data.response.TvShowItem
+import id.herdroid.moviecatalog.data.entity.MovieEntity
+import id.herdroid.moviecatalog.data.entity.TvShowEntity
 import id.herdroid.moviecatalog.viewmodel.DetailViewModel
 import id.herdroid.moviecatalog.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : AppCompatActivity() {
+
+    private var imageUrl = "https://image.tmdb.org/t/p/w500"
 
     companion object {
         const val EXTRA_MOVIE = "extra_movie"
@@ -33,47 +35,47 @@ class DetailActivity : AppCompatActivity() {
         val extras = intent.extras
         if (extras != null) {
             val movieId = intent.getIntExtra(EXTRA_MOVIE, 0)
-            if (movieId != null) {
+            if (movieId != 0) {
                 viewModel.setSelectedData(movieId)
 
                 progress_barDetail.visibility = View.VISIBLE
-                viewModel.getMovie().observe(this, Observer { _ ->
+                viewModel.getMovie().observe(this, Observer {
                     progress_barDetail.visibility = View.GONE
                 })
                 viewModel.getMovie().observe(this, Observer { movie -> populateMovie(movie) })
             } else {
                 val tvId = intent.getIntExtra(EXTRA_TVSHOW, 0)
-                if (tvId != null) {
+                if (tvId != 0) {
                     viewModel.setSelectedData(tvId)
 
                     progress_barDetail.visibility = View.VISIBLE
-                    viewModel.getTvShow().observe(this, Observer { _ ->
+                    viewModel.getTvShow().observe(this, Observer {
                         progress_barDetail.visibility = View.GONE
                     })
-                    viewModel.getTvShow().observe(this, Observer { tvshow -> populateTv(tvshow) })
+                    viewModel.getTvShow().observe(this, Observer { tvShow -> populateTv(tvShow) })
                 }
             }
         }
     }
 
-    private fun populateMovie(data: MovieItem) {
+    private fun populateMovie(data: MovieEntity) {
         movie_title.text = data.title
         movie_detail.text = data.description
         release_date.text = data.releaseDate
-        Glide.with(this).load(data.imagePath)
+        Glide.with(this).load(imageUrl + data.imagePath)
                 .into(bg_image)
-        Glide.with(this).load(data.imagePath)
+        Glide.with(this).load(imageUrl + data.imagePath)
                 .into(imgPoster)
         title = data.title
     }
 
-    private fun populateTv(data: TvShowItem) {
+    private fun populateTv(data: TvShowEntity) {
         movie_title.text = data.title
         movie_detail.text = data.description
         release_date.text = data.releaseDate
-        Glide.with(this).load(data.imagePath)
+        Glide.with(this).load(imageUrl + data.imagePath)
                 .into(bg_image)
-        Glide.with(this).load(data.imagePath)
+        Glide.with(this).load(imageUrl + data.imagePath)
                 .into(imgPoster)
 
         title = data.title

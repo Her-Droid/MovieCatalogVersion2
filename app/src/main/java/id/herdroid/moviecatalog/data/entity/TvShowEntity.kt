@@ -6,9 +6,18 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class TvShowEntity(
-    val tvShowId: String,
-    var title: String,
-    var description: String,
-    var releaseDate: String,
-    var imagePath: String
+    @SerializedName("id")
+    val tvShowId: Int,
+
+    @SerializedName("original_name")
+    val title: String,
+
+    @SerializedName("overview")
+    val description: String,
+
+    @SerializedName("poster_path")
+    val imagePath: String,
+
+    @SerializedName("first_air_date")
+    val releaseDate: String,
 ) : Parcelable

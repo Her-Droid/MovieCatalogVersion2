@@ -12,20 +12,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.herdroid.moviecatalog.R
 import id.herdroid.moviecatalog.adapter.MovieAdapter
-import id.herdroid.moviecatalog.data.response.MovieItem
 import id.herdroid.moviecatalog.enum.TypeData
-import id.herdroid.moviecatalog.ui.detail.DetailActivity
 import id.herdroid.moviecatalog.viewmodel.MovieViewModel
 import id.herdroid.moviecatalog.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_movie.*
 
 class MovieFragment : Fragment() {
 
-    private var type: TypeData = TypeData.MOVIES
-    private lateinit var adapter: MovieAdapter
-
     companion object {
-        const val MOVIE_TYPE = "type"
+        private const val MOVIE_TYPE = "type"
 
         @JvmStatic
         fun newInstance(type: TypeData) =
@@ -54,7 +49,7 @@ class MovieFragment : Fragment() {
 
             val academyAdapter = MovieAdapter()
             pb_movie.visibility = View.VISIBLE
-            viewModel.getMovies().observe(viewLifecycleOwner, Observer{ movie ->
+            viewModel.loadMovies().observe(viewLifecycleOwner, Observer{ movie ->
                 pb_movie.visibility = View.GONE
                 academyAdapter.setMovie(movie)
                 academyAdapter.notifyDataSetChanged()

@@ -8,25 +8,25 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import id.herdroid.moviecatalog.R
-import id.herdroid.moviecatalog.data.response.MovieItem
+import id.herdroid.moviecatalog.data.entity.MovieEntity
 import id.herdroid.moviecatalog.ui.detail.DetailActivity
 import kotlinx.android.synthetic.main.list_movie.view.*
 
 class MovieAdapter: RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
-    private var listMovie = ArrayList<MovieItem>()
+    private var listMovie = ArrayList<MovieEntity>()
 
-    fun setMovie(courses: List<MovieItem>) {
+    fun setMovie(courses: List<MovieEntity>) {
         if (courses == null) return
         this.listMovie.clear()
         this.listMovie.addAll(courses)
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bindItem(movies: MovieItem) {
+        fun bindItem(movies: MovieEntity) {
             itemView.run {
                 movies.also {
-                    Glide.with(itemView.context).load(movies.imagePath)
+                    Glide.with(itemView.context).load("https://image.tmdb.org/t/p/w500" + movies.imagePath)
                             .into(img_movie)
                     movie_title.text = it.title
                     movie_description.text = it.description
@@ -36,7 +36,7 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
                     context.startActivity(
 
                     Intent(context, DetailActivity::class.java)
-                        .putExtra(DetailActivity.EXTRA_MOVIE, movies.id)
+                        .putExtra(DetailActivity.EXTRA_MOVIE, movies.movieId)
                     )
                 }
             }

@@ -1,9 +1,10 @@
 package id.herdroid.moviecatalog.api.remote
 
+
 import id.herdroid.moviecatalog.api.ApiService
-import id.herdroid.moviecatalog.data.response.MovieItem
+import id.herdroid.moviecatalog.data.entity.MovieEntity
+import id.herdroid.moviecatalog.data.entity.TvShowEntity
 import id.herdroid.moviecatalog.data.response.MovieResponse
-import id.herdroid.moviecatalog.data.response.TvShowItem
 import id.herdroid.moviecatalog.data.response.TvShowResponse
 import id.herdroid.moviecatalog.utils.EspressoIdlingResource
 import io.reactivex.Observer
@@ -11,8 +12,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-
 class RemoteDataRepository private constructor(private val apiService: ApiService) {
+
 
     companion object {
         @Volatile
@@ -21,6 +22,7 @@ class RemoteDataRepository private constructor(private val apiService: ApiServic
         fun getInstance(apiService: ApiService): RemoteDataRepository =
             instance ?: synchronized(this) {
                 instance ?: RemoteDataRepository(apiService)
+
             }
     }
 
@@ -56,7 +58,7 @@ class RemoteDataRepository private constructor(private val apiService: ApiServic
         val getApiService = apiService.getMovieById(movieId,"28140e5b657db765f7b67c7ced117502")
         getApiService.subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Observer<MovieItem>{
+            .subscribe(object : Observer<MovieEntity>{
                 override fun onComplete() {
 
                 }
@@ -65,7 +67,7 @@ class RemoteDataRepository private constructor(private val apiService: ApiServic
 
                 }
 
-                override fun onNext(value: MovieItem?) {
+                override fun onNext(value: MovieEntity?) {
                     detailMovieCallback.onDetailMovieReceived(value)
                     EspressoIdlingResource.decrement()
                 }
@@ -101,12 +103,14 @@ class RemoteDataRepository private constructor(private val apiService: ApiServic
             })
     }
 
+
+
     fun getDetailTvShow(tvShowId: Int, detailTvShowCallback: RemoteLoadCallback.LoadDetailTvShowCallback){
         EspressoIdlingResource.increment()
         val getApiService = apiService.getTvShowById(tvShowId, "28140e5b657db765f7b67c7ced117502")
         getApiService.subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object  : Observer<TvShowItem>{
+            .subscribe(object  : Observer<TvShowEntity>{
                 override fun onComplete() {
 
                 }
@@ -115,7 +119,7 @@ class RemoteDataRepository private constructor(private val apiService: ApiServic
 
                 }
 
-                override fun onNext(value: TvShowItem?) {
+                override fun onNext(value: TvShowEntity?) {
                     detailTvShowCallback.onDetailTvShowsReceived(value)
                     EspressoIdlingResource.decrement()
                 }

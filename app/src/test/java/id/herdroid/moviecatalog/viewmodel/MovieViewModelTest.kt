@@ -5,14 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import id.herdroid.moviecatalog.api.source.DataRepository
 import id.herdroid.moviecatalog.data.entity.MovieEntity
-import id.herdroid.moviecatalog.data.response.MovieItem
 import id.herdroid.moviecatalog.utils.DataDummy
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito
+import org.mockito.Mockito.*
 
 class MovieViewModelTest {
 
@@ -39,13 +39,13 @@ class MovieViewModelTest {
         val dataMovies = MutableLiveData<List<MovieEntity>>()
         dataMovies.value = dummyMovie
 
-        Mockito.`when`(dataRepository.getListMovie()).thenReturn(dataMovies)
-        val movie = viewModel.getMovies().value
-        Mockito.verify<DataRepository>(dataRepository).getListMovie()
+        `when`(dataRepository.getListMovie()).thenReturn(dataMovies)
+        val movie = viewModel.loadMovies().value
+        verify<DataRepository>(dataRepository).getListMovie()
         assertNotNull(movie)
         assertEquals(10, movie?.size)
 
-        viewModel.getMovies().observeForever(observer)
-        Mockito.verify(observer).onChanged(dummyMovie)
+        viewModel.loadMovies().observeForever(observer)
+        verify(observer).onChanged(dummyMovie)
     }
 }

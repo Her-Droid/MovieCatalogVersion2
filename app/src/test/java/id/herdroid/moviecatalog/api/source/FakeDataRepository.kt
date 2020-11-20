@@ -1,5 +1,6 @@
 package id.herdroid.moviecatalog.api.source
 
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import id.herdroid.moviecatalog.api.remote.RemoteDataRepository
@@ -7,17 +8,7 @@ import id.herdroid.moviecatalog.api.remote.RemoteLoadCallback
 import id.herdroid.moviecatalog.data.entity.MovieEntity
 import id.herdroid.moviecatalog.data.entity.TvShowEntity
 
-class DataRepository(private val remoteDataRepository: RemoteDataRepository) : DataSource {
-
-    companion object {
-        @Volatile
-        private var instance: DataRepository? = null
-
-        fun getInstance(remoteDataRepository: RemoteDataRepository): DataRepository =
-            instance ?: synchronized(this) {
-                instance ?: DataRepository(remoteDataRepository)
-            }
-    }
+class FakeDataRepository(private val remoteDataRepository: RemoteDataRepository) :  DataSource {
 
     override fun getListMovie(): LiveData<List<MovieEntity>> {
         val listMovie = MutableLiveData<List<MovieEntity>>()
@@ -66,17 +57,16 @@ class DataRepository(private val remoteDataRepository: RemoteDataRepository) : D
     override fun getTvShowById(tvShowId: Int): LiveData<TvShowEntity> {
         val detailTvShow = MutableLiveData<TvShowEntity>()
         remoteDataRepository.getDetailTvShow(tvShowId,
-        object : RemoteLoadCallback.LoadDetailTvShowCallback{
-            override fun onDetailTvShowsReceived(responseTvShow: TvShowEntity?) {
-                detailTvShow.postValue(responseTvShow)
-            }
+            object : RemoteLoadCallback.LoadDetailTvShowCallback{
+                override fun onDetailTvShowsReceived(responseTvShow: TvShowEntity?) {
+                    detailTvShow.postValue(responseTvShow)
+                }
 
-            override fun onDetailTvShowsNotReceived(message: String) {
+                override fun onDetailTvShowsNotReceived(message: String) {
 
-            }
-        })
+                }
+            })
         return detailTvShow
     }
-
 
 }

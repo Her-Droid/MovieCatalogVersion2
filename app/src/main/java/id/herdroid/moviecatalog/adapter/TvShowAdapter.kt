@@ -9,25 +9,25 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import id.herdroid.moviecatalog.R
-import id.herdroid.moviecatalog.data.response.TvShowItem
+import id.herdroid.moviecatalog.data.entity.TvShowEntity
 import id.herdroid.moviecatalog.ui.detail.DetailActivity
 import kotlinx.android.synthetic.main.list_tvshow.view.*
 
 class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.ViewHolder>() {
 
-    private var listTvShow = ArrayList<TvShowItem>()
+    private var listTvShow = ArrayList<TvShowEntity>()
 
-    fun setTvShow(courses: List<TvShowItem>?) {
+    fun setTvShow(courses: List<TvShowEntity>?) {
         if (courses == null) return
         this.listTvShow.clear()
         this.listTvShow.addAll(courses)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bindItem(tvShow: TvShowItem) {
+        fun bindItem(tvShow: TvShowEntity) {
             itemView.run {
                 tvShow.also {
-                    Glide.with(itemView.context).load(tvShow.imagePath)
+                    Glide.with(itemView.context).load("https://image.tmdb.org/t/p/w500" + tvShow.imagePath)
                             .into(img_tv)
                     tv_title.text = it.title
                     tv_description.text = it.description
@@ -36,7 +36,7 @@ class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.ViewHolder>() {
                 setOnClickListener {
                     context.startActivity(
                             Intent(context, DetailActivity::class.java)
-                                    .putExtra(DetailActivity.EXTRA_TVSHOW, tvShow.id)
+                                    .putExtra(DetailActivity.EXTRA_TVSHOW, tvShow.tvShowId)
                     )
                 }
             }

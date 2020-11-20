@@ -1,8 +1,8 @@
 package id.herdroid.moviecatalog.api
 
-import id.herdroid.moviecatalog.data.response.MovieItem
+import id.herdroid.moviecatalog.data.entity.MovieEntity
+import id.herdroid.moviecatalog.data.entity.TvShowEntity
 import id.herdroid.moviecatalog.data.response.MovieResponse
-import id.herdroid.moviecatalog.data.response.TvShowItem
 import id.herdroid.moviecatalog.data.response.TvShowResponse
 import io.reactivex.Observable
 import retrofit2.http.GET
@@ -18,9 +18,9 @@ interface ApiService {
 
     @GET("movie/{id}")
     fun getMovieById(
-            @Path("id") movieId : Int?,
-            @Query("api_key") apiKey : String
-    ): Observable<MovieItem>
+        @Path("id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): Observable<MovieEntity>
 
     @GET("tv/top_rated")
     fun getTvShows(
@@ -29,8 +29,8 @@ interface ApiService {
 
     @GET("tv/{id}")
     fun getTvShowById(
-        @Path("id") tvId : Int?,
+        @Path("id") tvId: Int,
         @Query("api_key") apiKey: String
-    ): Observable<TvShowItem>
+    ): Observable<TvShowEntity>
 
 }

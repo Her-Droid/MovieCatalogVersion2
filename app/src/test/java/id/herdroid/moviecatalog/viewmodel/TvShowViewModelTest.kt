@@ -1,21 +1,50 @@
 package id.herdroid.moviecatalog.viewmodel
 
-import org.junit.Assert.*
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import id.herdroid.moviecatalog.api.source.DataRepository
+import id.herdroid.moviecatalog.data.entity.TvShowEntity
+import id.herdroid.moviecatalog.utils.DataDummy
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.mockito.Mock
+import org.mockito.Mockito.*
 
 class TvShowViewModelTest {
     private lateinit var viewModel: TvShowViewModel
 
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    @Mock
+    private lateinit var dataRepository: DataRepository
+
+    @Mock
+    private lateinit var observer: Observer<List<TvShowEntity>>
+
     @Before
-    fun setUp(){
-        viewModel = TvShowViewModel()
+    fun setUp() {
+        viewModel = TvShowViewModel(dataRepository)
     }
+
 
     @Test
     fun getTvShows(){
-        val tvShows = viewModel.getTvShows()
-        assertNotNull(tvShows)
-        assertEquals(10, tvShows.size)
+        val dummyTvShow = DataDummy.dummyTvShows()
+        val dataTvShow = MutableLiveData<List<TvShowEntity>>()
+        dataTvShow.value = dummyTvShow
+
+        `when`(dataRepository.getListTvShow()).thenReturn(dataTvShow)
+        val tvShow = viewModel.loadTvShow().value
+        verify<DataRepository>(dataRepository).getListMovie()
+        assertNotNull(tvShow)
+        assertEquals(10, tvShow?.size)
+
+        viewModel.loadTvShow().observeForever(observer)
+        verify(observer).onChanged(dummyTvShow)
     }
 }
