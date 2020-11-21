@@ -39,7 +39,7 @@ class DataRepositoryTest {
                 .onAllMoviesReceived(movieResponse)
             null
         }.`when`(remote).getMovies(any())
-        val movieEntities = LiveDataTestUtil.getValue(dataRepository.getListMovie(movieId))
+        val movieEntities = LiveDataTestUtil.getValue(dataRepository.getListMovie())
         verify(remote).getMovies(any())
         assertNotNull(movieEntities)
         assertEquals(movieResponse.size.toLong(), movieEntities.size.toLong())
@@ -72,8 +72,8 @@ class DataRepositoryTest {
                 .onAllTvShowsReceived(tvShowResponse)
             null
         }.`when`(remote).getTvShows(any())
-        val tvShowEntities = LiveDataTestUtil.getValue(dataRepository.getListTvShow(tvShowId))
-        verify(remote).getMovies(any())
+        val tvShowEntities = LiveDataTestUtil.getValue(dataRepository.getListTvShow())
+        verify(remote).getTvShows(any())
         assertNotNull(tvShowEntities)
         assertEquals(tvShowResponse.size.toLong(), tvShowEntities.size.toLong())
     }
@@ -87,7 +87,7 @@ class DataRepositoryTest {
         }.`when`(remote).getDetailTvShow(eq(tvShowId), any())
 
         val tvShowEntities = LiveDataTestUtil.getValue(dataRepository.getTvShowById(tvShowId))
-        verify(remote).getDetailMovie(eq(tvShowId), any())
+        verify(remote).getDetailTvShow(eq(tvShowId), any())
         assertNotNull(tvShowEntities.title)
         assertEquals(dummyTvShow.title, tvShowEntities.title)
         assertNotNull(tvShowEntities.description)

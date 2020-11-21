@@ -13,23 +13,26 @@ import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.*
+import org.mockito.MockitoAnnotations
+import kotlin.jvm.Throws
 
 class MovieViewModelTest {
 
+    @Rule
+    @JvmField
+    val instantTaskExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
     private lateinit var viewModel: MovieViewModel
-
-    @get:Rule
-    var instantTaskExecutorRule = InstantTaskExecutorRule()
+    private var dataRepository = mock(DataRepository::class.java)
 
     @Mock
-    private lateinit var dataRepository: DataRepository
-
-    @Mock
-    private lateinit var observer: Observer<List<MovieEntity>>
+    lateinit var observer: Observer<List<MovieEntity>>
 
     @Before
+    @Throws(Exception::class)
     fun setUp() {
+        MockitoAnnotations.initMocks(this)
         viewModel = MovieViewModel(dataRepository)
+
     }
 
 

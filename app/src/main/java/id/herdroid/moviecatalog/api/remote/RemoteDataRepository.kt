@@ -19,6 +19,7 @@ class RemoteDataRepository private constructor(private val apiService: ApiServic
         @Volatile
         private var instance: RemoteDataRepository? = null
 
+
         fun getInstance(apiService: ApiService): RemoteDataRepository =
             instance ?: synchronized(this) {
                 instance ?: RemoteDataRepository(apiService)
@@ -50,7 +51,7 @@ class RemoteDataRepository private constructor(private val apiService: ApiServic
                     loadMoviesCallback.onAllMoviesNotReceived(e?.message.toString())
                 }
 
-            })
+            },)
     }
 
     fun getDetailMovie(movieId: Int, detailMovieCallback: RemoteLoadCallback.LoadDetailMovieCallback){

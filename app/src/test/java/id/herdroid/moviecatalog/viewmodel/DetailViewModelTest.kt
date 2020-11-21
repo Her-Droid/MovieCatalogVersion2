@@ -16,23 +16,22 @@ import org.mockito.Mock
 import org.mockito.Mockito.*
 
 class DetailViewModelTest {
-    private lateinit var viewModel: DetailViewModel
     private val dataMovie = DataDummy.dummyMovies()[0]
     private val movieId = dataMovie.movieId
     private val dataTvShow = DataDummy.dummyTvShows()[0]
     private val tvShowId = dataTvShow.tvShowId
 
-    @get:Rule
-    var instantTaskExecutorRule = InstantTaskExecutorRule()
+    @Rule
+    @JvmField
+    val instantTaskExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
+    private lateinit var viewModel: DetailViewModel
+    private var dataRepository = mock(DataRepository::class.java)
 
     @Mock
-    private lateinit var dataRepository: DataRepository
+    lateinit var movieObserver: Observer<MovieEntity>
 
     @Mock
-    private lateinit var movieObserver: Observer<MovieEntity>
-
-    @Mock
-    private lateinit var tvShowObserver: Observer<TvShowEntity>
+    lateinit var tvShowObserver: Observer<TvShowEntity>
 
     @Before
     fun setUp() {
@@ -75,8 +74,8 @@ class DetailViewModelTest {
         assertEquals(dataTvShow.imagePath, tvShowEntity.imagePath)
         assertEquals(dataTvShow.title, tvShowEntity.title)
 
-        viewModel.getMovie().observeForever(movieObserver)
-        verify(movieObserver).onChanged(dataMovie)
+        viewModel.getTvShow().observeForever(tvShowObserver)
+        verify(tvShowObserver).onChanged(dataTvShow)
     }
 
 

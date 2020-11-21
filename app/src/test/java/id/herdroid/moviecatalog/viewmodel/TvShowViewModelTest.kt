@@ -13,21 +13,25 @@ import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.*
+import org.mockito.MockitoAnnotations
+import kotlin.jvm.Throws
+
 
 class TvShowViewModelTest {
+
+    @Rule
+    @JvmField
+    val instantTaskExecutorRule: InstantTaskExecutorRule = InstantTaskExecutorRule()
     private lateinit var viewModel: TvShowViewModel
-
-    @get:Rule
-    var instantTaskExecutorRule = InstantTaskExecutorRule()
+    private var dataRepository = mock(DataRepository::class.java)
 
     @Mock
-    private lateinit var dataRepository: DataRepository
-
-    @Mock
-    private lateinit var observer: Observer<List<TvShowEntity>>
+    lateinit var observer: Observer<List<TvShowEntity>>
 
     @Before
+    @Throws(Exception::class)
     fun setUp() {
+        MockitoAnnotations.initMocks(this)
         viewModel = TvShowViewModel(dataRepository)
     }
 
@@ -40,7 +44,7 @@ class TvShowViewModelTest {
 
         `when`(dataRepository.getListTvShow()).thenReturn(dataTvShow)
         val tvShow = viewModel.loadTvShow().value
-        verify<DataRepository>(dataRepository).getListMovie()
+        verify<DataRepository>(dataRepository).getListTvShow()
         assertNotNull(tvShow)
         assertEquals(10, tvShow?.size)
 

@@ -7,7 +7,7 @@ import id.herdroid.moviecatalog.data.entity.MovieEntity
 import id.herdroid.moviecatalog.data.entity.TvShowEntity
 
 class DetailViewModel(private val dataRepository: DataRepository) :ViewModel() {
-    var movId : Int = 1
+    private var movId : Int = 0
 
     fun setSelectedData(courseId: Int) {
         this.movId = courseId
