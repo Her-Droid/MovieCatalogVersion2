@@ -1,12 +1,15 @@
 package id.herdroid.moviecatalog.api.remote
 
 
-import id.herdroid.moviecatalog.api.ApiService
+import androidx.lifecycle.MutableLiveData
+import id.herdroid.moviecatalog.api.network.ApiService
 import id.herdroid.moviecatalog.data.entity.MovieEntity
 import id.herdroid.moviecatalog.data.entity.TvShowEntity
 import id.herdroid.moviecatalog.data.response.MovieResponse
 import id.herdroid.moviecatalog.data.response.TvShowResponse
 import id.herdroid.moviecatalog.utils.EspressoIdlingResource
+import id.herdroid.moviecatalog.utils.MessageResponse
+import id.herdroid.moviecatalog.vo.Resource
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -38,17 +41,17 @@ class RemoteDataRepository private constructor(private val apiService: ApiServic
 
                 }
 
-                override fun onSubscribe(d: Disposable?) {
+                override fun onSubscribe(d: Disposable) {
 
                 }
 
-                override fun onNext(value: MovieResponse?) {
-                    loadMoviesCallback.onAllMoviesReceived(value?.results)
+                override fun onNext(value: MovieResponse) {
+                    loadMoviesCallback.onAllMoviesReceived(value.results)
                     EspressoIdlingResource.decrement()
                 }
 
-                override fun onError(e: Throwable?) {
-                    loadMoviesCallback.onAllMoviesNotReceived(e?.message.toString())
+                override fun onError(e: Throwable) {
+
                 }
 
             },)
@@ -64,43 +67,45 @@ class RemoteDataRepository private constructor(private val apiService: ApiServic
 
                 }
 
-                override fun onSubscribe(d: Disposable?) {
-
+                override fun onSubscribe(d: Disposable) {
                 }
 
-                override fun onNext(value: MovieEntity?) {
+                override fun onNext(value: MovieEntity) {
                     detailMovieCallback.onDetailMovieReceived(value)
                     EspressoIdlingResource.decrement()
                 }
 
-                override fun onError(e: Throwable?) {
-                    detailMovieCallback.onDetailMovieNotReceived(e?.message.toString())
+                override fun onError(e: Throwable) {
                 }
+
+
             })
     }
 
     fun getTvShows(loadTvShowsCallback: RemoteLoadCallback.LoadTvShowsCallback){
         EspressoIdlingResource.increment()
         val getApiService = apiService.getTvShows("28140e5b657db765f7b67c7ced117502")
+        val data = MutableLiveData<Resource<MessageResponse>>()
         getApiService.subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Observer<TvShowResponse>{
                 override fun onComplete() {
+                    data.value = Resource.success(MessageResponse("Succes to add Movie"))
+                }
+
+                override fun onSubscribe(d: Disposable) {
 
                 }
 
-                override fun onSubscribe(d: Disposable?) {
-
-                }
-
-                override fun onNext(value: TvShowResponse?) {
-                    loadTvShowsCallback.onAllTvShowsReceived(value?.results)
+                override fun onNext(value: TvShowResponse) {
+                    loadTvShowsCallback.onAllTvShowsReceived(value.results)
                     EspressoIdlingResource.decrement()
                 }
 
-                override fun onError(e: Throwable?) {
-                    loadTvShowsCallback.onAllTvShowsNotReceived(e?.message.toString())
+                override fun onError(e: Throwable) {
                 }
+
+
             })
     }
 
@@ -116,18 +121,19 @@ class RemoteDataRepository private constructor(private val apiService: ApiServic
 
                 }
 
-                override fun onSubscribe(d: Disposable?) {
+                override fun onSubscribe(d: Disposable) {
 
                 }
 
-                override fun onNext(value: TvShowEntity?) {
+                override fun onNext(value: TvShowEntity) {
                     detailTvShowCallback.onDetailTvShowsReceived(value)
                     EspressoIdlingResource.decrement()
                 }
 
-                override fun onError(e: Throwable?) {
-                    detailTvShowCallback.onDetailTvShowsNotReceived(e?.message.toString())
+                override fun onError(e: Throwable) {
                 }
+
+
             })
     }
 }

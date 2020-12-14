@@ -1,7 +1,5 @@
 package id.herdroid.moviecatalog.adapter
 
-
-import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -17,10 +15,10 @@ class TvShowAdapter: RecyclerView.Adapter<TvShowAdapter.ViewHolder>() {
 
     private var listTvShow = ArrayList<TvShowEntity>()
 
-    fun setTvShow(courses: List<TvShowEntity>?) {
-        if (courses == null) return
+    fun setTvShow(tvShow: List<TvShowEntity>?) {
+        if (tvShow == null) return
         this.listTvShow.clear()
-        this.listTvShow.addAll(courses)
+        this.listTvShow.addAll(tvShow)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

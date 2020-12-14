@@ -1,4 +1,4 @@
-package id.herdroid.moviecatalog.api
+package id.herdroid.moviecatalog.api.network
 
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient

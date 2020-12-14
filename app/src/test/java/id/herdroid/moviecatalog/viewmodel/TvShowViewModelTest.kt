@@ -44,7 +44,8 @@ class TvShowViewModelTest {
 
         `when`(dataRepository.getListTvShow()).thenReturn(dataTvShow)
         val tvShow = viewModel.loadTvShow().value
-        verify<DataRepository>(dataRepository).getListTvShow()
+        verify(dataRepository).getListTvShow()
+
         assertNotNull(tvShow)
         assertEquals(10, tvShow?.size)
 

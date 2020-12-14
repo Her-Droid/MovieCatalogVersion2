@@ -44,7 +44,7 @@ class MovieViewModelTest {
 
         `when`(dataRepository.getListMovie()).thenReturn(dataMovies)
         val movie = viewModel.loadMovies().value
-        verify<DataRepository>(dataRepository).getListMovie()
+        verify(dataRepository).getListMovie()
         assertNotNull(movie)
         assertEquals(10, movie?.size)
 

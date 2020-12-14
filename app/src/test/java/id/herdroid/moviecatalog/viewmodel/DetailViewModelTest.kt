@@ -14,6 +14,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.*
+import org.mockito.MockitoAnnotations
+import kotlin.jvm.Throws
 
 class DetailViewModelTest {
     private val dataMovie = DataDummy.dummyMovies()[0]
@@ -34,7 +36,9 @@ class DetailViewModelTest {
     lateinit var tvShowObserver: Observer<TvShowEntity>
 
     @Before
+    @Throws(Exception::class)
     fun setUp() {
+        MockitoAnnotations.initMocks(this)
         viewModel = DetailViewModel(dataRepository)
         viewModel.setSelectedData(movieId)
         viewModel.setSelectedData(tvShowId)

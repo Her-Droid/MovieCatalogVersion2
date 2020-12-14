@@ -8,13 +8,15 @@ import id.herdroid.moviecatalog.di.Injection
 
 class ViewModelFactory private constructor(private val dataRepository: DataRepository) : ViewModelProvider.NewInstanceFactory() {
 
+
+
     companion object{
         @Volatile
         private var instance: ViewModelFactory? = null
 
         fun getInstance(context: Context): ViewModelFactory =
-            instance ?: synchronized(this){
-                instance ?: ViewModelFactory(Injection.provideRepository(context))
+            instance ?: synchronized(context){
+                instance ?: ViewModelFactory(Injection.provideRepository())
         }
     }
 

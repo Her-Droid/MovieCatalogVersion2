@@ -1,6 +1,5 @@
 package id.herdroid.moviecatalog.adapter
 
-import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -16,10 +15,9 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
     private var listMovie = ArrayList<MovieEntity>()
 
-    fun setMovie(courses: List<MovieEntity>) {
-        if (courses == null) return
+    fun setMovie(movies: List<MovieEntity>) {
         this.listMovie.clear()
-        this.listMovie.addAll(courses)
+        this.listMovie.addAll(movies)
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

@@ -39,20 +39,18 @@ class DetailActivity : AppCompatActivity() {
                 viewModel.setSelectedData(movieId)
 
                 progress_barDetail.visibility = View.VISIBLE
-                viewModel.getMovie().observe(this, Observer {
+                viewModel.getMovie().observe(this, Observer { movie -> populateMovie(movie)
                     progress_barDetail.visibility = View.GONE
                 })
-                viewModel.getMovie().observe(this, Observer { movie -> populateMovie(movie) })
             } else {
                 val tvId = intent.getIntExtra(EXTRA_TVSHOW, 0)
                 if (tvId != 0) {
                     viewModel.setSelectedData(tvId)
 
                     progress_barDetail.visibility = View.VISIBLE
-                    viewModel.getTvShow().observe(this, Observer {
+                    viewModel.getTvShow().observe(this, Observer { tvShow -> populateTv(tvShow)
                         progress_barDetail.visibility = View.GONE
                     })
-                    viewModel.getTvShow().observe(this, Observer { tvShow -> populateTv(tvShow) })
                 }
             }
         }

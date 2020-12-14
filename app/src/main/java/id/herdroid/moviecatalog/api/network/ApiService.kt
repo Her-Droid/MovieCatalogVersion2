@@ -1,4 +1,4 @@
-package id.herdroid.moviecatalog.api
+package id.herdroid.moviecatalog.api.network
 
 import id.herdroid.moviecatalog.data.entity.MovieEntity
 import id.herdroid.moviecatalog.data.entity.TvShowEntity

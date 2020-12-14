@@ -10,4 +10,9 @@
     <string name="empty_movie">EMPTY MOVIE</string>
     <string name="copyright">Created by: Russi Hersiano</string>
     <string name="image_splash">IMAGE SPLASH</string>
+    <string name="nav_menu">Movie</string>
+    <string name="nav_tvShow">Tv Show</string>
+    <string name="nav_favorite">Favorite</string>
+    <string name="nav_search">Search</string>
+    <string name="hint_search">Search for a movie, tv show…</string>
 </resources>
