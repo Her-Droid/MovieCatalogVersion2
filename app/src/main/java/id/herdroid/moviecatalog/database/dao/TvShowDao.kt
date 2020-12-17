@@ -10,24 +10,21 @@ import id.herdroid.moviecatalog.data.entity.TvShowEntity
 interface TvShowDao {
 
     @Query("SELECT * FROM TvShow")
-    fun getTvShowDb(): LiveData<List<TvShowEntity>>
+    fun getTvShowDb(): DataSource.Factory<Int, TvShowEntity>
 
     @Query("SELECT * FROM TvShow WHERE id = :tvShowId")
     fun getTvShowDbById(tvShowId: Int?): LiveData<TvShowEntity>
 
     @Query("SELECT * FROM TvShow WHERE favorite = 1")
-    fun getFavoriteTvShow(): DataSource.Factory<Int, TvShowEntity>
+    fun getFavoriteTvShow() : DataSource.Factory<Int, TvShowEntity>
 
-    @RawQuery(observedEntities = [TvShowEntity::class])
-    fun getSortedTvShows(query: SupportSQLiteQuery): DataSource.Factory<Int, TvShowEntity>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE, entity = TvShowEntity::class)
     fun insertTvShow(tvShow: List<TvShowEntity>)
 
-    @Update
-    fun updateTvShow(tvShow: TvShowEntity)
+    @Update(entity = TvShowEntity::class)
+    fun updateTvShow(tvShow : TvShowEntity)
 
     @Delete
-    fun deleteTvShow(tvShow: TvShowEntity)
+    fun delete(tvShow: TvShowEntity)
 
 }

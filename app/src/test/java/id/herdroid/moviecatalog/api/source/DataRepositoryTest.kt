@@ -9,7 +9,6 @@ import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.verify
 import org.mockito.Mockito.mock
 import id.herdroid.moviecatalog.api.remote.RemoteDataRepository
-import id.herdroid.moviecatalog.api.remote.RemoteLoadCallback
 import id.herdroid.moviecatalog.utils.DataDummy
 import id.herdroid.moviecatalog.utils.LiveDataTestUtil
 import org.junit.Rule

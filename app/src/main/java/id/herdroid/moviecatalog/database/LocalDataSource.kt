@@ -2,7 +2,6 @@ package id.herdroid.moviecatalog.database
 
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
-import androidx.sqlite.db.SupportSQLiteQuery
 import id.herdroid.moviecatalog.data.entity.MovieEntity
 import id.herdroid.moviecatalog.data.entity.TvShowEntity
 import id.herdroid.moviecatalog.database.dao.MovieDao
@@ -11,71 +10,56 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class LocalDataSource private constructor(private val movieDao: MovieDao, private val tvShowDao: TvShowDao){
+class LocalDataSource private constructor(private val movieDao: MovieDao, private val tvShowDao: TvShowDao) {
 
-    companion object{
-        private var INSTANCE: LocalDataSource? =null
 
-        fun getInstance(movieDao: MovieDao, tvShowDao: TvShowDao): LocalDataSource{
-            if (INSTANCE == null){
-                INSTANCE = LocalDataSource(movieDao, tvShowDao)
-            }
-            return INSTANCE as LocalDataSource
-        }
+    companion object {
+        private var INSTANCE: LocalDataSource? = null
+
+        fun getInstance(movieDao: MovieDao,tvShowDao: TvShowDao ): LocalDataSource =
+                INSTANCE ?: LocalDataSource(movieDao, tvShowDao)
     }
 
-    fun getMovieDb(): LiveData<List<MovieEntity>> = movieDao.getMovieDb()
+    // Movie Dao
+    fun getMovies(): DataSource.Factory<Int, MovieEntity> = movieDao.getMovieDb()
 
-    fun getDetailMovie(movieId : Int?): LiveData<MovieEntity> = movieDao.getMovieDbById(movieId)
+    fun getDetailMovie(movieId: Int): LiveData<MovieEntity> = movieDao.getMovieDbById(movieId)
 
     fun getFavoriteMovie(): DataSource.Factory<Int, MovieEntity> = movieDao.getFavoriteMovie()
 
-    fun getSortedMovies(query: SupportSQLiteQuery): DataSource.Factory<Int, MovieEntity> = movieDao.getSortedMovies(query)
+    fun insertMovie(movieEntity: List<MovieEntity>) = movieDao.insertMovie(movieEntity)
 
-    fun insertMovie(movie: List<MovieEntity>){
-      GlobalScope.launch(Dispatchers.Main) {
-          movieDao.insertMovie(movie)
-      }
-    }
-
-    fun setMovieFavorite(movie: MovieEntity, newState: Boolean?){
-        movie.favorite = newState
-        movieDao.updateMovie(movie)
+    fun setFavoriteMovie(movieEntity : MovieEntity) {
+        movieEntity.favorite = movieEntity.favorite
+        movieDao.updateMovie(movieEntity)
     }
 
     fun removeFavoriteMovie(movie: MovieEntity) {
-        GlobalScope.launch(Dispatchers.Main) {
-            movieDao.deleteMovie(movie)
-        }
+        GlobalScope.launch(Dispatchers.Main) { movieDao.delete(movie) }
     }
 
+    //Tv Show Dao
+    fun getTvShows(): DataSource.Factory<Int, TvShowEntity> = tvShowDao.getTvShowDb()
 
-
-    fun getTvShowDb(): LiveData<List<TvShowEntity>> = tvShowDao.getTvShowDb()
-
-    fun getDetailTvShow(tvShowId : Int?): LiveData<TvShowEntity> = tvShowDao.getTvShowDbById(tvShowId)
+    fun getDetailTvShow(tvShowId: Int): LiveData<TvShowEntity> = tvShowDao.getTvShowDbById(tvShowId)
 
     fun getFavoriteTvShow(): DataSource.Factory<Int, TvShowEntity> = tvShowDao.getFavoriteTvShow()
 
-    fun getSortedTvShows(query: SupportSQLiteQuery): DataSource.Factory<Int, TvShowEntity> = tvShowDao.getSortedTvShows(query)
+    fun insertTvShow(tvShowEntity: List<TvShowEntity>) = tvShowDao.insertTvShow(tvShowEntity)
 
-
-    fun insertTvShow(tvShow: List<TvShowEntity>){
-        GlobalScope.launch(Dispatchers.Main) {
-            tvShowDao.insertTvShow(tvShow)
-        }
-    }
-
-    fun setTvShowFavorite(tvShow: TvShowEntity, newState: Boolean?){
-        tvShow.favorite = newState
-        tvShowDao.updateTvShow(tvShow)
+    fun setFavoriteTvShow(tvShowEntity: TvShowEntity) {
+        tvShowEntity.favorite = tvShowEntity.favorite
+        tvShowDao.updateTvShow(tvShowEntity)
     }
 
     fun removeFavoriteTvShow(tvShow: TvShowEntity) {
-        GlobalScope.launch(Dispatchers.Main) {
-            tvShowDao.deleteTvShow(tvShow)
-        }
+        GlobalScope.launch(Dispatchers.Main) { tvShowDao.delete(tvShow) }
     }
+
+
+
+
+
 
 
 }

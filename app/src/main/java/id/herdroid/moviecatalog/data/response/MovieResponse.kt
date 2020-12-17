@@ -13,7 +13,5 @@ data class MovieResponse(
 
     @SerializedName("results")
     val results: List<MovieEntity>
-
 )
-
 

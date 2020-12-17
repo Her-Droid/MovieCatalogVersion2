@@ -8,24 +8,28 @@ import id.herdroid.moviecatalog.vo.Resource
 
 interface DataSource {
 
+    //Movie List
     fun getAllMovies(): LiveData<Resource<PagedList<MovieEntity>>>
 
-    fun getAllTvShows(): LiveData<Resource<PagedList<TvShowEntity>>>
-
-    fun getDetailMovie(id: String): LiveData<Resource<MovieEntity>>
-
-    fun getDetailTvShow(id: String): LiveData<Resource<TvShowEntity>>
+    fun getDetailMovie(id: Int): LiveData<MovieEntity>
 
     fun getFavoriteMovies(): LiveData<PagedList<MovieEntity>>
 
-    fun getFavoriteTvShows(): LiveData<PagedList<TvShowEntity>>
-
-    fun getSortedMovies(sort: String): LiveData<PagedList<MovieEntity>>
-
-    fun getSortedTvShows(sort: String): LiveData<PagedList<TvShowEntity>>
-
     fun setFavoriteMovie(movie: MovieEntity, state: Boolean)
 
+    fun removeFavoriteMovie(movie: MovieEntity)
+
+
+
+    //Tv Show List
+    fun getAllTvShows(): LiveData<Resource<PagedList<TvShowEntity>>>
+
+    fun getDetailTvShow(id: Int): LiveData<TvShowEntity>
+
+    fun getFavoriteTvShows(): LiveData<PagedList<TvShowEntity>>
+
     fun setFavoriteTvShow(tvShow: TvShowEntity, state: Boolean)
+
+    fun removeFavoriteTvShow(tvShow: TvShowEntity)
 
 }

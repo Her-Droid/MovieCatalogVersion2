@@ -9,7 +9,7 @@ import id.herdroid.moviecatalog.data.entity.TvShowEntity
 import id.herdroid.moviecatalog.database.dao.MovieDao
 import id.herdroid.moviecatalog.database.dao.TvShowDao
 
-@Database(entities = [MovieEntity::class, TvShowEntity::class], version = 2, exportSchema = false)
+@Database(entities = [MovieEntity::class, TvShowEntity::class], version = 1, exportSchema = false)
 abstract class FavoriteDatabase : RoomDatabase(){
 
     abstract fun movieDao(): MovieDao

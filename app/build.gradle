@@ -74,7 +74,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1"
 
     //paging
-    implementation "androidx.paging:paging-runtime-ktx:3.0.0-alpha10"
+    implementation "androidx.paging:paging-runtime-ktx:2.1.2"
 
     //android Testing
     androidTestImplementation "androidx.test.ext:junit:$androidxExtVersion"

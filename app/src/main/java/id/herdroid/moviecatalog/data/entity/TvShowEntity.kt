@@ -16,25 +16,25 @@ data class TvShowEntity(
         @NonNull
         @ColumnInfo(name = "id")
         @SerializedName("id")
-        val tvShowId: Int,
+        val tvShowId: Int= 0,
 
         @ColumnInfo(name = "original_name")
         @SerializedName("original_name")
-        val title: String,
+        val title: String? = null,
 
         @ColumnInfo(name = "overview")
         @SerializedName("overview")
-        val description: String,
+        val description: String? = null,
 
         @ColumnInfo(name = "poster_path")
         @SerializedName("poster_path")
-        val imagePath: String,
+        val imagePath: String? = null,
 
         @ColumnInfo(name = "first_air_date")
         @SerializedName("first_air_date")
-        val releaseDate: String,
+        val releaseDate: String? = null,
 
         @ColumnInfo(name = "favorite")
-        var favorite: Boolean? = false
+        var favorite: Boolean = false
 
 ) : Parcelable

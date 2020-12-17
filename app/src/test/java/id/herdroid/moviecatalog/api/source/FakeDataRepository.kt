@@ -4,7 +4,6 @@ package id.herdroid.moviecatalog.api.source
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import id.herdroid.moviecatalog.api.remote.RemoteDataRepository
-import id.herdroid.moviecatalog.api.remote.RemoteLoadCallback
 import id.herdroid.moviecatalog.data.entity.MovieEntity
 import id.herdroid.moviecatalog.data.entity.TvShowEntity
 

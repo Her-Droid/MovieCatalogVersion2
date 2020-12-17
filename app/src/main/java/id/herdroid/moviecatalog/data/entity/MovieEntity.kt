@@ -16,25 +16,25 @@ data class MovieEntity(
         @NonNull
         @ColumnInfo(name = "id")
         @SerializedName("id")
-        val movieId: Int,
+        val movieId: Int= 0,
 
         @ColumnInfo(name = "original_title")
         @SerializedName("original_title")
-        val title: String,
+        val title: String? = null,
 
         @ColumnInfo(name = "overview")
         @SerializedName("overview")
-        val description: String,
+        val description: String? = null,
 
         @ColumnInfo(name = "poster_path")
         @SerializedName("poster_path")
-        val imagePath: String,
+        val imagePath: String? = null,
 
         @ColumnInfo(name = "release_date")
         @SerializedName("release_date")
-        val releaseDate: String,
+        val releaseDate:String? = null,
 
         @ColumnInfo(name = "favorite")
-        var favorite: Boolean? = false,
+        var favorite: Boolean = false,
 
 ) : Parcelable

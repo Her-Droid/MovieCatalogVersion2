@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import id.herdroid.moviecatalog.R
 import id.herdroid.moviecatalog.enum.TypeData
+import id.herdroid.moviecatalog.ui.fragment.FavoriteMovieFragment
+import id.herdroid.moviecatalog.ui.fragment.FavoriteTvShowFragment
 import id.herdroid.moviecatalog.ui.fragment.MovieFragment
 import id.herdroid.moviecatalog.ui.fragment.TvShowFragment
 
@@ -16,8 +18,8 @@ class ViewPagerAdapter(private val context: Context, fragmentManager: FragmentMa
 
     override fun getItem(position: Int): Fragment {
         return when (position) {
-            0 -> MovieFragment.newInstance(TypeData.MOVIES)
-            1 -> TvShowFragment.newInstance(TypeData.TV_SHOWS)
+            0 -> FavoriteMovieFragment()
+            1 -> FavoriteTvShowFragment()
             else -> Fragment()
         }
     }

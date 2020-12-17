@@ -13,8 +13,8 @@ class DetailViewModel(private val dataRepository: DataRepository) :ViewModel() {
         this.movId = courseId
     }
 
-    fun getMovie(): LiveData<MovieEntity> = dataRepository.getMovieById(movId)
+    fun getMovie(): LiveData<MovieEntity> = dataRepository.getDetailMovie(movId)
 
-    fun getTvShow(): LiveData<TvShowEntity> = dataRepository.getTvShowById(movId)
+    fun getTvShow(): LiveData<TvShowEntity> = dataRepository.getDetailTvShow(movId)
 
 }

@@ -13,7 +13,6 @@ import id.herdroid.moviecatalog.viewmodel.ViewModelFactory
 
 class FavoriteMovieFragment : Fragment() {
 
-    private lateinit var favMovieAdapter: FavoriteMovieAdapter
     private lateinit var movieViewModel: MovieViewModel
 
     override fun onCreateView(
